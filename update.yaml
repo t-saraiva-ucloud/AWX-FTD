@@ -1,0 +1,13 @@
+---
+
+- name: Testes de update
+  hosts: all
+
+  tasks:
+    - name: Atualização de repo
+      ansible.builtin.apt:
+        name: "*"
+        state: latest
+        update_cache: yes
+
+
