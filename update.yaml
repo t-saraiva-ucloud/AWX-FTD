@@ -9,5 +9,9 @@
         name: "*"
         state: latest
         update_cache: yes
+        register: result
 
+    - name: output
+      debug:
+        msg: result
 
