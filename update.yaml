@@ -13,5 +13,5 @@
 
     - name: output
       debug:
-        msg: result
+        var: result
 
