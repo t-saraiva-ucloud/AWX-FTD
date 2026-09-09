@@ -4,6 +4,14 @@
   hosts: all
 
   tasks:
+
+    - name: Consultar PAM 
+      beyondtrust.password_safe.credentials: 
+        url: "{{ beyondtrust_url }}"             
+        client_id: "{{ beyondtrust_client }}"    
+        client_secret: "{{ beyondtrust_secret }}"
+        system_name: "servidor-linux-01"
+        account_name: "svc-pam "
     - name: ping
       ansible.builtin.ping:
 
