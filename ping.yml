@@ -7,7 +7,8 @@
 
     - name: Consultar PAM 
       ansible.builtin.set_fact:
-        ansible_password: "{{ lookup('beyondtrust.secrets_safe.secrets_safe_lookup', api_url=beyondtrust_url, client_id=beyondtrust_client, client_secret=beyondtrust_secret, retrieval_type='MANAGED_ACCOUNT', secret_list='servidor-linux-01/svc-pam')[0] }}"
+        ansible_user: "svc-pam"
+        ansible_password: "{{ lookup('beyondtrust.secrets_safe.secrets_safe_lookup', api_url=beyondtrust_url, client_id=beyondtrust_client, client_secret=beyondtrust_secret, retrieval_type='MANAGED_ACCOUNT', secret_list='servidor-linux-01/svc-pam')[0] }}"    
     
     - name: ping
       ansible.builtin.ping:
