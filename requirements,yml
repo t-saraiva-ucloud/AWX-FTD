@@ -1,0 +1,4 @@
+---
+collections:
+    - name: beyondtrust.password_safe
+    - name: beyondtrust.secrets_safe
