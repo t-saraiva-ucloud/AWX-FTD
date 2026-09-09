@@ -6,12 +6,8 @@
   tasks:
 
     - name: Consultar PAM 
-      beyondtrust.password_safe.credentials: 
-        url: "{{ beyondtrust_url }}"             
-        client_id: "{{ beyondtrust_client }}"    
-        client_secret: "{{ beyondtrust_secret }}"
-        system_name: "servidor-linux-01"
-        account_name: "svc-pam"
+      ansible.builtin.set_fact:
+        ansible_password: "{{ lookup('beyondtrust.secrets_safe.secrets_safe_lookup', api_url=beyondtrust_url, client_id=beyondtrust_client, client_secret=beyondtrust_secret, retrieval_type='MANAGED_ACCOUNT', secret_list='servidor-linux-01/svc-pam')[0] }}"
 
     - name: ping
       ansible.builtin.ping:
