@@ -2,8 +2,6 @@ plugin: google.cloud.gcp_compute
 projects:
   - prj-ftd-prod-jornal
   - prj-ftd-prod-radaria
-  - prj-ftd-prod-esx
-  - prj-ftd-hml-esx
   - prj-ftd-dev-esx
   - prj-ftd-dev-ionica-orqembarque
   - prj-ftd-poc-ionica-lab-arq
@@ -47,15 +45,8 @@ projects:
   - prj-ftd-shared-net-crit-2712
   - prj-ftd-prod-portalcomvc
   - prj-ftd-uat-portalcomvc
-  - prj-ftd-shared-billing-9207
-  - prj-ftd-b2c-login-social-prod
-  - ionica-login-social
-  - prj-ftd-lumisfera-b2b-hmg
-  - prj-ftd-lumisfera-b2b-prod
   - ftd-agentspace-prod-472421
   - aira-hml
-  - prj-ftd-vulcano--1750732599825
-  - prj-ftd-areadocliente-prod
   - correcao-redacao-dev-451218
   - prj-ftd-critico-com-585e
   - prj-ftd-svcs-com-56d5
@@ -70,23 +61,12 @@ projects:
   - prj-ftd-vpc-critico-com-8802
   - prj-ftd-vpc-shd-np-d115
   - prj-ftd-seed-com
-  - correcao-redacao-hmg
   - poc-aira-prod
   - correcao-redacao-dev
   - poc-aira-dev
-  - ionica-analytics
   - lumisfera
   - rugged-weaver-404615
-  - ionica-app
-  - svc-login-social
-  - ecommerce-ftd
   - analytics-bigquery-321918
-  - agentedemanda-yeac
-  - api-demanda
-  - ionica-analyticsftd
-  - souionica
-  - se-ftd-191018
-  - se-ftd
   - bigquery-ftd
   - cloud-ftd
 
