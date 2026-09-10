@@ -6,20 +6,51 @@
 
   tasks:
 
-    - name: Consultar PAM no AWX
-      beyondtrust.password_safe.credentials: 
-        url: "{{ beyondtrust_url }}"             
-        client_id: "{{ beyondtrust_client }}"    
-        client_secret: "{{ beyondtrust_secret }}"
-        system_name: "{{ inventory_hostname }}"
-        account_name: "svc-pam"
-      register: pam_result
+    - name: 1. Autenticar no beyondtrust
+      ansible.builtin.uri: 
+        url: "{{ beyondtrust_url }}/Auth/Connect/Token"
+        method: POST             
+        body_format: form-urlencoded
+        body:
+          grant_type: "client_credentials"
+          client_id: "{{ beyondtrust_client }}"
+          client_secret: "{{ beyondtrust_secret }}"
+        validate_certs: false
+      register: auth_response
+      delegate_to: localhost
+
+    - name: 2. Solicitar acesso a contrato
+      ansible.builtin.uri:
+        uri: "{{ beyondtrust_url }}/Requests"
+        method: POST
+        headers:
+          Authorization: "Bearer {{ auth_response.json.access_token }}"
+        body_format: json
+        body:
+          SystemName: "{{ inventory_hostname }}"
+          AccountName: "svc-pam"
+          DurationMinutes: 5
+          Reason: "Automacao AWX"
+        validate_certs: false
+        states_code: [200, 201]
+      register: pam_request
+      delegate_to: localhost
+
+    - name: 3. Solicitar a senha liberada
+      ansible.builtin.uri:
+        uri: "{{ beyondtrust_url }}/Credentials/{{ pam_request.json.RequestId | default(pam_request.json[0].RequestId | default(pam_request.json.id)) }}"
+        method: GET
+        headers:
+          Authorization: "Bearer {{ auth_response.json.access_token }}"
+        validate_certs: false
+        return_content: true
+      register: pam_credential
       delegate_to: localhost
 
     - name: Definir credenciais para o SSH
       ansible.builtin.set_fact:
         ansible_user: "svc-pam"
-        ansible_password: "{{ pam_result.password }}"    
+        ansible_password: "{{ pam_credential.content | replace('\"', '') }}"    
     
     - name: ping
       ansible.builtin.ping:
